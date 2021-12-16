@@ -17,7 +17,7 @@ jobs:
                   python-version: 3.9
 
             - name: Install python packages
-              run: pip install -r scripts/requirements.txt
+              run: pip install PyGithub
 
             - name: Analyze the event and (if needed) write a comment
               run: python scripts/notify_docteam.py --token ${{ secrets.WORKFLOW_GITHUB_TOKEN }} --event ${{ github.event.action }} --pull_request ${{ github.event.pull_request.number }} --label "${{ github.event.label.name }}"
