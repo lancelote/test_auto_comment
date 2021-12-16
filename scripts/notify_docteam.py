@@ -18,8 +18,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--token", type=str, required=True)
     parser.add_argument("--pull_request", type=int, required=True)
-    parser.add_argument("--event", type=str, required=True)
-    parser.add_argument("--label", type=str)
     args = parser.parse_args()
 
     repo = env("GITHUB_REPOSITORY")
@@ -28,5 +26,4 @@ if __name__ == '__main__':
     repo = g.get_repo(repo)
     pr = repo.get_pull(args.pull_request)
 
-    if pr.is_merged() and any(label.name == DOC_LABEL for label in pr.labels):
-        pr.create_issue_comment(DOC_MSG)
+    pr.create_issue_comment(DOC_MSG)

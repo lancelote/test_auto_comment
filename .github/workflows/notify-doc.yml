@@ -6,6 +6,9 @@ on:
 
 jobs:
     build:
+        if: |
+          github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'to be documented') ||
+          github.event.label.name == 'to be documented' && github.event.pull_request.merged
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repo content
@@ -20,4 +23,4 @@ jobs:
               run: pip install PyGithub
 
             - name: Analyze the event and (if needed) write a comment
-              run: python scripts/notify_docteam.py --token ${{ secrets.WORKFLOW_GITHUB_TOKEN }} --event ${{ github.event.action }} --pull_request ${{ github.event.pull_request.number }} --label "${{ github.event.label.name }}"
+              run: python scripts/notify_docteam.py --token ${{ secrets.WORKFLOW_GITHUB_TOKEN }} --pull_request ${{ github.event.pull_request.number }}
